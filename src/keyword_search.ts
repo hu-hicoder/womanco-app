@@ -15,3 +15,14 @@ export function keywordSearch(text: string): { keyword: string, position: number
 
     return results;
 }
+
+export async function kanji2kana(text: string): Promise<string> {
+    const apiUrl = `https://api.excelapi.org/language/kanji2kana?text=${encodeURIComponent(text)}`;
+
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.text();
+    return data;
+}
