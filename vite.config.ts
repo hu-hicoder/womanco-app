@@ -3,9 +3,10 @@ import { defineConfig } from "vite";
 
 const manifest = defineManifest({
   manifest_version: 3,
-  description:  "This is an example extension",
-  name: "womanco-app",
+  name: "ウーマンコミュニケーション",
   version: "0.1.0",
+  description: "ウーマンコミュニケーションが遊べる拡張機能",
+  permissions: ["activeTab", "scripting"],
   icons: {
     128: "icons/icon128.png",
   },
@@ -14,8 +15,15 @@ const manifest = defineManifest({
     default_title: "example",
   },
   background: {
-    service_worker: "src/background/index.ts",
+    service_worker: "src/background.ts",
   },
+  content_scripts: [
+    {
+      matches: ["https://*/*"],
+      run_at: "document_end",
+      js: ["src/content.ts"],
+    }
+  ],
 });
 
 export default defineConfig({
