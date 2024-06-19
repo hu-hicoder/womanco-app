@@ -26,3 +26,15 @@ export async function kanji2kana(text: string): Promise<string> {
     const data = await response.text();
     return data;
 }
+
+export function kana2hira(text: string): string {
+    const katakana = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポァィゥェォャュョッ";
+    const hiragana = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽぁぃぅぇぉゃゅょっ";
+    
+    // [\u30A1-\u30FA]はカタカナの文字コード
+    return text.replace(/[\u30A1-\u30F6]/g, (match) => {
+        const index = katakana.indexOf(match);
+        return index !== -1 ? hiragana[index] : match;
+    });
+}
+
