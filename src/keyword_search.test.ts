@@ -1,6 +1,5 @@
 import { test, expect } from "vitest";
 import { keywordSearch, kanji2kana, kana2hira } from "./keyword_search";
-import { i } from "vitest/dist/reporters-yx5ZTtEV";
 
 test("keywordSearch test", () => {
     const inputText = 'とらのはなはな'; // 検索対象の文章
