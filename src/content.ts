@@ -1,10 +1,21 @@
-import { html2Tree, tree2Html } from "./parse";
+import { modifyHtml, ModifyHandler } from "./libs/modifier";
+import { keywords } from "./keywords";
+import { text2Button } from "./libs/button";
 
-// 使用例
-const html = `<div><p>Hello, <b>world!</b></p></div>`;
-const tree = html2Tree(html);
 
-console.log('Tree structure:', tree);
+const handler: ModifyHandler = {
+  ontext(data) {
+    const modifiedData = text2Button(data, keywords);
+    return { data: modifiedData };
+  }
+};
 
-const updatedHtml = tree2Html(tree);
-console.log('HTML:', updatedHtml);
+const bodyhtml = document.body.outerHTML;
+modifyHtml(bodyhtml, handler).then((modifiedHtml) => {
+  document.documentElement.innerHTML = modifiedHtml;
+  console.log("HTML modified successfully!: ", modifiedHtml);
+}).catch((error) => {
+  console.error("Error modifying HTML:", error);
+});
+
+export { }

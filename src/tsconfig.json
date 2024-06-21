@@ -1,9 +1,14 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true
-    }
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "outDir": "./dist",
+    "module": "commonjs",
+    "strict": true,
+    "noUnusedParameters": false,
+    "esModuleInterop": true,
   }
-  
+}
