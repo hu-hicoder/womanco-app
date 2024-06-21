@@ -17,9 +17,15 @@ const manifest = defineManifest({
   },
   content_scripts: [
     {
-      matches: ["https://*/*", "file:///C:/*/*"],
+      matches: ["<all_urls>"],
       js: ["src/content.ts"],
       run_at: "document_idle",
+    }
+  ],
+  web_accessible_resources: [
+    {
+      matches: ["<all_urls>"],
+      resources: ["bomb.wav"],
     }
   ],
 });

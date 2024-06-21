@@ -1,19 +1,22 @@
 import { modifyHtml, ModifyHandler } from "./libs/modifier";
 import { keywords } from "./keywords";
-import { text2Button } from "./libs/button";
+import { text2Button, addButtonClickHandlers } from "./libs/button";
 
 // モーダルのHTMLとCSSを追加
 const modalHtml = `
   <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
     <div id="modal-content" style="background-color:transparent; position:relative; padding:20px; border-radius:5px; max-width:500px; width:90%; text-align:center;">
       <button id="modal-close" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5em; cursor:pointer;">×</button>
-      <h2 id="modal-keyword" style="color:pink; font-size:5em; font-weight:bold; margin-top:50px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">厳ついキーワード</h2>
+      <h2 id="modal-keyword" style="color:pink; font-size:5em; font-weight:bold; margin-top:50px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);"></h2>
     </div>
   </div>
 `;
 
 // モーダルをドキュメントに追加
 document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+// サウンドファイルの読み込み
+const clickSound = new Audio(chrome.runtime.getURL('bomb.wav'));
 
 // ModifyHandlerの設定
 const handler: ModifyHandler = {
@@ -49,16 +52,21 @@ modifyHtml(bodyHtml, handler).then((modifiedHtml) => {
     }
   });
 
-  // ボタンのクリックイベントリスナーを追加
+  // ボタンクリックのイベントハンドラーを追加
   document.querySelectorAll('button[id="womanco"]').forEach(button => {
     button.addEventListener('click', (event) => {
       const keyword = (event.target as HTMLElement).getAttribute('keyword');
       if (keyword) {
         modalKeyword.innerText = keyword;
         modal.style.display = 'flex';
+        clickSound.currentTime = 0; // 再生位置をリセット
+        clickSound.play().catch(error => console.error("Error playing sound:", error)); // ボタンがクリックされたときに音を再生
       }
     });
   });
+
+  // ボタンクリックのイベントハンドラーを追加
+  addButtonClickHandlers(clickSound);
 }).catch((error) => {
   console.error("Error modifying HTML:", error);
 });
