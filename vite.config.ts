@@ -17,7 +17,7 @@ const manifest = defineManifest({
   },
   content_scripts: [
     {
-      matches: ["https://*/*"],
+      matches: ["https://*/*", "file:///C:/*/*"],
       js: ["src/content.ts"],
       run_at: "document_idle",
     }

@@ -1,1 +1,3 @@
-export const keywords: string[] = ["うんこ", "うんち", "くり", "は"];
+export const keywords: string[] = [
+  "うんこ", "うんち", "くり", "まら", "かり", "せいし", "は"
+];
